@@ -24,6 +24,6 @@ runs:
       id: config
       shell: bash
       run: |
-        value=$(python ${{ inputs.script_path }} ${{ inputs.yaml_path }}
+        value=$(python ${{ inputs.script_path }} ${{ inputs.yaml_path }})
         echo "value=$value" >> $GITHUB_OUTPUT
         
