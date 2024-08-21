@@ -4,8 +4,8 @@ import yaml
 import sys
 
 
-def get_config_value(args: List[str]):
-    with open("config.yaml", "r") as ymlfile:
+def get_config_value(path, args: List[str]):
+    with open(path, "r") as ymlfile:
         cfg = yaml.safe_load(ymlfile)
         for arg in args:
             if arg not in cfg:
@@ -15,5 +15,6 @@ def get_config_value(args: List[str]):
 
 
 if __name__ == "__main__":
-    args = sys.argv[1:]
-    print(get_config_value(args))
+    path = sys.argv[1]
+    args = sys.argv[2:]
+    print(get_config_value(path, args))

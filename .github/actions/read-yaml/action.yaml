@@ -4,7 +4,11 @@ inputs:
   keys:
     description: 'The keys to look up within the YAML file, separated by space (e.g., "environment production url").'
     required: true
-  path:
+  script_path:
+    description: 'config file path.'
+    required: false
+    default: ./tools/read_yaml.py
+  yaml_path:
     description: 'config file path.'
     required: false
     default: ./config.yaml
@@ -23,6 +27,6 @@ runs:
       id: config
       shell: bash
       run: |
-        value=$(python ${{ inputs.path }} ${{ inputs.keys }})
+        value=$(python ${{ inputs.script_path }} ${{ inputs.yaml_path }} ${{ inputs.keys }})
         echo "value=$value" >> $GITHUB_OUTPUT
         
