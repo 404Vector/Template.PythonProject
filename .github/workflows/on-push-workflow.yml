@@ -20,16 +20,13 @@ jobs:
       - name: Display the config
         shell: bash
         run: echo ${{ steps.read_data_from_config.outputs.value }}
-  job_temp_test:
+  job_check_config_value:
     needs: job_read_config
     runs-on: ubuntu-latest
     steps:
-      - name: e
+      - name: Display config value
         run: |
           echo ${{ needs.job_read_config.outputs.config }}
-          echo ${{ fromJson(needs.job_read_config.outputs.config) }}
-          echo ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['runs-on'] }}
-          echo ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['python-targets'] }}
 
   job_check_format:
     needs: job_read_config
