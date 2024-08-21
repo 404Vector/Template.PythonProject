@@ -14,4 +14,5 @@ runs:
       with:
         packages: 'black'
     - name: Run Black
+      shell: bash
       run: black --check ${{ inputs.path }}
