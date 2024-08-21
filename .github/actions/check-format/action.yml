@@ -1,0 +1,17 @@
+name: "actions/check-format"
+description: "A custom action to check Python code format using Black"
+inputs:
+  path:
+    description: "The path to the Python files to check"
+    required: true
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install dependencies using custom pip-install action
+      uses: ./.github/actions/install-pip.yaml
+      with:
+        packages: 'black'
+    - name: Run Black
+      run: black --check ${{ inputs.path }}

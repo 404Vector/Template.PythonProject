@@ -1,0 +1,28 @@
+name: 'actions/read-yaml'
+description: 'Read a value from a YAML file based on provided keys.'
+inputs:
+  keys:
+    description: 'The keys to look up within the YAML file, separated by space (e.g., "environment production url").'
+    required: true
+  path:
+    description: 'config file path.'
+    required: false
+    default: ./config.py
+outputs:
+  value:
+    value: ${{ steps.config.outputs.value }}
+    description: 'The value retrieved from the YAML file based on the provided keys.'
+runs:
+  using: "composite"
+  steps:
+    - name: Install dependencies using custom pip-install action
+      uses: ./.github/actions/install-pip
+      with:
+        packages: 'pyyaml'
+    - name: Read config value and set output
+      id: config
+      shell: bash
+      run: |
+        value=$(python ${{ inputs.path }} ${{ inputs.keys }})
+        echo "value=$value" >> $GITHUB_OUTPUT
+        
