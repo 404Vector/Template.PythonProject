@@ -27,6 +27,8 @@ jobs:
       - name: e
         run: |
           echo ${{ fromJson(needs.job_read_config.outputs.config) }}
+          echo ${{ fromJson(needs.job_read_config.outputs.config)['runs-on'] }}
+          echo ${{ fromJson(needs.job_read_config.outputs.config)['python-targets'] }}
 
   job_check_format:
     needs: job_read_config
