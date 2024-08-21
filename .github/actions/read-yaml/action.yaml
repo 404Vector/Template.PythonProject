@@ -18,8 +18,9 @@ runs:
     - name: dir_test
       shell: bash
       run: |
-        ls ./
-        ls ./actions
+        ls ./ -al
+        ls ./.github -al
+        ls ./.github/actions -al
     - name: Install dependencies using custom pip-install action
       uses: ./.github/actions/install-pip
       with:
