@@ -37,6 +37,9 @@ jobs:
         container: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['docker-targets'] }}  # 테스트할 Python 버전 목록
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-pip
+        with:
+          packages: .
       - uses: ./.github/actions/check-format
         with:
           path: .
