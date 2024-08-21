@@ -8,30 +8,22 @@ jobs:
   job_read_config:
     runs-on: [ubuntu-latest]
     outputs:
-      runs_on: ${{ steps.read_runs_on_from_config.outputs.value }}
-      python_targets: ${{ steps.read_runs_on_from_config.outputs.value }}
+      config: ${{ steps.read_data_from_config.outputs.value }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
-      - name: Read 'runs-on' from the config
-        id: read_runs_on_from_config
+      - name: Read datas from the config
+        id: read_data_from_config
         uses: ./.github/actions/read-yaml
-        with:
-          keys: workflows runs-on
-      - name: Read 'python-targets' from the config
-        id: read_python_targets_from_config
-        uses: ./.github/actions/read-yaml
-        with:
-          keys: workflows python-targets
 
   job_check_format:
     needs: job_read_config  # job_a의 실행 결과에 의존
-    runs-on: ${{ needs.job_read_config.outputs.runs_on }}
+    runs-on: ${{ fromJson(needs.job_read_config.outputs.config)['runs-on'] }}
     strategy:
       matrix:
-        python-version: ${{ needs.job_read_config.outputs.python_targets }}  # 테스트할 Python 버전 목록
+        python-version: ${{ fromJson(needs.job_read_config.outputs.config)['python-targets'] }}  # 테스트할 Python 버전 목록
     steps:
       - uses: ./.github/actions/check-format
         with:

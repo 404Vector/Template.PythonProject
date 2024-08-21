@@ -1,20 +1,17 @@
 # parse_config.py
 from typing import List
 import yaml
+import json
 import sys
 
 
-def get_config_value(path, args: List[str]):
-    with open(path, "r") as ymlfile:
-        cfg = yaml.safe_load(ymlfile)
-        for arg in args:
-            if arg not in cfg:
-                raise KeyError(f"{arg} is NOT in {cfg}")
-            cfg = cfg[arg]
-        return cfg
+def convert_yaml_to_json(yaml_path):
+    with open(yaml_path, "r") as file:
+        yaml_content = yaml.safe_load(file)
+        json_content = json.dumps(yaml_content)
+        return json_content
 
 
 if __name__ == "__main__":
     path = sys.argv[1]
-    args = sys.argv[2:]
-    print(get_config_value(path, args))
+    print(convert_yaml_to_json(path))
