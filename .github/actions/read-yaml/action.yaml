@@ -7,7 +7,7 @@ inputs:
   path:
     description: 'config file path.'
     required: false
-    default: ./config.py
+    default: config.py
 outputs:
   value:
     value: ${{ steps.config.outputs.value }}
