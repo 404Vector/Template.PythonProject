@@ -11,7 +11,7 @@ runs:
   using: "composite"
   steps:
     - name: Cache pip dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/') }}-${{ inputs.packages }}
@@ -19,4 +19,5 @@ runs:
           ${{ runner.os }}-pip-
 
     - name: Install Python dependencies
+      shell: bash
       run: pip install --cache-dir ~/.cache/pip ${{ inputs.packages }}

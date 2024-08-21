@@ -1,13 +1,14 @@
 name: 'actions/read-yaml'
-description: 'Read a value from a YAML file based on provided keys.'
+description: 'Read values from a YAML file and parse to json string'
 inputs:
-  keys:
-    description: 'The keys to look up within the YAML file, separated by space (e.g., "environment production url").'
-    required: true
-  path:
+  script_path:
     description: 'config file path.'
     required: false
-    default: ./config.py
+    default: ./tools/read_yaml.py
+  yaml_path:
+    description: 'config file path.'
+    required: false
+    default: ./config.yaml
 outputs:
   value:
     value: ${{ steps.config.outputs.value }}
@@ -23,6 +24,6 @@ runs:
       id: config
       shell: bash
       run: |
-        value=$(python ${{ inputs.path }} ${{ inputs.keys }})
+        value=$(python ${{ inputs.script_path }} ${{ inputs.yaml_path }})
         echo "value=$value" >> $GITHUB_OUTPUT
         
