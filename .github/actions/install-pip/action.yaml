@@ -19,4 +19,5 @@ runs:
           ${{ runner.os }}-pip-
 
     - name: Install Python dependencies
+      shell: bash
       run: pip install --cache-dir ~/.cache/pip ${{ inputs.packages }}
