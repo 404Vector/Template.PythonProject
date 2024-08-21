@@ -17,6 +17,9 @@ jobs:
       - name: Read datas from the config
         id: read_data_from_config
         uses: ./.github/actions/read-yaml
+      - name: Display the config
+        shell: bash
+        run: echo ${{ steps.read_data_from_config.outputs.value }}
 
   job_check_format:
     needs: job_read_config  # job_a의 실행 결과에 의존
