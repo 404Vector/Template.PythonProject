@@ -28,15 +28,15 @@ jobs:
         run: |
           echo ${{ needs.job_read_config.outputs.config }}
           echo ${{ fromJson(needs.job_read_config.outputs.config) }}
-          echo ${{ fromJson(needs.job_read_config.outputs.config)['runs-on'] }}
-          echo ${{ fromJson(needs.job_read_config.outputs.config)['python-targets'] }}
+          echo ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['runs-on'] }}
+          echo ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['python-targets'] }}
 
   job_check_format:
     needs: job_read_config
-    runs-on: ${{ fromJson(needs.job_read_config.outputs.config)['runs-on'] }}
+    runs-on: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['runs-on'] }}
     strategy:
       matrix:
-        python-version: ${{ fromJson(needs.job_read_config.outputs.config)['python-targets'] }}  # 테스트할 Python 버전 목록
+        python-version: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['python-targets'] }}  # 테스트할 Python 버전 목록
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
