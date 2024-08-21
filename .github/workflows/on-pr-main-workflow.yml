@@ -29,7 +29,8 @@ jobs:
         run: |
           echo ${{ needs.job_read_config.outputs.config }}
 
-  job_validation:
+  job_script_validation:
+    if: contains(github.event.pull_request.changed_files, '.py')
     needs: job_read_config
     runs-on: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['runs-on'] }}
     strategy:
