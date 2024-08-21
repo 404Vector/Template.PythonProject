@@ -1,3 +1,3 @@
 workflows:
   runs-on: ["ubuntu-latest"]
-  python-targets: [3.8, 3.9, 3.10,]
+  python-targets: ["3.8", "3.9", "3.10",]
