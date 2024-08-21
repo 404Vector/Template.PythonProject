@@ -1,8 +1,9 @@
-name: Check python format with black
+name: Trigger on Pull Request to Main Branch
 
 on:
-  push:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   job_read_config:
@@ -28,7 +29,7 @@ jobs:
         run: |
           echo ${{ needs.job_read_config.outputs.config }}
 
-  job_check_format:
+  job_validation:
     needs: job_read_config
     runs-on: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['runs-on'] }}
     strategy:
@@ -36,4 +37,9 @@ jobs:
         container: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['docker-targets'] }}  # 테스트할 Python 버전 목록
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/check-format
+        with:
+          path: .
       - uses: ./.github/actions/pytest
+        with:
+          path: .
