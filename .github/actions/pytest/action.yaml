@@ -1,0 +1,20 @@
+name: "pytest"
+description: "Run PyTest"
+
+inputs:
+  path:
+    description: "Path or dir for pytest"
+    required: false
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install dependencies using custom pip-install action
+      uses: ./.github/actions/install-pip
+      with:
+        packages: 'pytest'
+    - name: Read config value and set output
+      shell: bash
+      run: |
+        pytest ${{ inputs.path }}
