@@ -15,6 +15,10 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
     - name: Install dependencies using custom pip-install action
       uses: ./.github/actions/install-pip
       with:
