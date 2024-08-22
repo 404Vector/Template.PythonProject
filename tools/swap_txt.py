@@ -7,7 +7,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("file_path", type=str)
     parser.add_argument("target_str", type=str)
-    parser.add_argument("new_str", type=str)
+    parser.add_argument("replace_str", type=str)
     return parser.parse_args()
 
 
