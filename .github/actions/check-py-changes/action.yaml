@@ -1,10 +1,6 @@
 name: "Check for Python file changes"
 description: "Checks if there are any Python (.py) files changed in the PR."
 inputs:
-  head_branch:
-    description: "The branch to pr (default is the PR head branch)"
-    required: false
-    default: ${{ github.head_ref }}
   base_branch:
     description: "The branch to compare against (default is the PR base branch)"
     required: false
@@ -21,14 +17,13 @@ runs:
     - name: Fetch the compare branch
       shell: bash
       run: |
-        git fetch origin ${{ inputs.head_branch }}
         git fetch origin ${{ inputs.base_branch }}
 
     - name: Check for .py file changes
       shell: bash
       id: check_files
       run: |
-        if git diff --name-only origin/${{ inputs.base_branch }}...origin/${{ inputs.head_branch }} | grep -q '\.py$'; then
+        if git diff --name-only origin/${{ inputs.base_branch }} | grep -q '\.py$'; then
           echo "value=true" >> $GITHUB_ENV
         else
           echo "value=false" >> $GITHUB_ENV
