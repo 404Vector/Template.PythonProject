@@ -10,8 +10,6 @@ on:
         description: 'Body for the release'
         required: false
         default: ""
-env:
-  RELEASE_NAME=Release-${{ github.event.inputs.tag_name }}
 
 jobs:
   validate_tag:
@@ -42,5 +40,5 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.tag_name }}
           if e:
-          name: ${{ github.env.RELEASE_NAME }}
+          name: Release ${{ github.env.RELEASE_NAME }}
           body: ${{ github.event.inputs.release_body }}
