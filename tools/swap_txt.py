@@ -12,10 +12,11 @@ def parse_args() -> argparse.Namespace:
 
 
 def main(file_path: str, target_str: str, replace_str: str):
-    with open(file_path, mode="rb") as f:
-        buffer: bytes = f.read()
-        strs = buffer.decode("utf-8").replace(target_str, replace_str)
-        print(strs)
+    with open(file_path, mode="r") as f:
+        buffer: str = f.read()
+        strs = buffer.replace(target_str, replace_str)
+    with open(file_path, mode="w") as f:
+        f.write(strs)
 
 
 if __name__ == "__main__":
