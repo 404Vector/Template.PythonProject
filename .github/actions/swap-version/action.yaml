@@ -1,0 +1,26 @@
+name: "swap-text"
+description: "A GitHub Action to swap text in a file using a Python script."
+
+inputs:
+  file_path:
+    description: "The path to the file in which the text will be swapped."
+    required: true
+    default: "some_file.txt"
+  target_str:
+    description: "The target string to be replaced."
+    required: true
+    default: "some_txt"
+  new_str:
+    description: "The new string to replace the target string."
+    required: true
+    default: "some_new_txt"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Swap text using Python script
+      shell: bash
+      run: |
+        python tools/swap_txt.py ${{ inputs.file_path }} ${{ inputs.target_str }} ${{ inputs.new_str }} > ${{ inputs.file_path }}
+        echo "Result after swapping text:"
+        cat ${{ inputs.file_path }}

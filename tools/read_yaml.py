@@ -1,4 +1,3 @@
-# parse_config.py
 from typing import List
 import yaml
 import json

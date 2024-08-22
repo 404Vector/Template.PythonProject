@@ -56,3 +56,9 @@ jobs:
       - uses: ./.github/actions/pytest
         with:
           path: .
+      - uses: ./.github/actions/install-pip
+        with:
+          packages: poetry
+      - name: Build
+        shell: bash
+        run: poetry build

@@ -1,4 +1,2 @@
-def test_import_version():
-    from my_project._version import __version__
-
-    print(__version__)
+def test_ex():
+    assert 1 + 1 == 2

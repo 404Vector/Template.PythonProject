@@ -1,0 +1,35 @@
+name: Manual Build and Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag for the release (e.g., 1.0.0)'
+        required: true
+
+jobs:
+  validate_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Tag Name
+        run: |
+          if [[ ! "${{ github.event.inputs.tag_name }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Invalid tag name. It must be in the format X.Y.Z, where X, Y, and Z are numbers."
+            exit 1
+          fi
+  job_create_release:
+    needs: validate_tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Swap version
+        uses: ./.actions/swap-version
+        with:
+          file_path: ./pyproject.toml
+          target_str: 0.0.0
+          new_str: ${{ github.event.inputs.tag_name }}
+          
+      - name: Release
+        uses: softprops/action-gh-release@v2
