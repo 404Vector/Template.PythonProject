@@ -27,6 +27,8 @@ jobs:
     outputs:
       is_changed: ${{ steps.check_py_changes.outputs.value }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Check job changes
         uses: ./.github/actions/check-py-changes
         id: check_py_changes
