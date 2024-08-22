@@ -23,9 +23,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Swap version
-        uses: ./.actions/swap-version
+        uses: ./.github/.actions/swap-version
         with:
           file_path: ./pyproject.toml
           target_str: 0.0.0
