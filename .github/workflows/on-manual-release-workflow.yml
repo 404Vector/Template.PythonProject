@@ -6,6 +6,12 @@ on:
       tag_name:
         description: 'Tag for the release (e.g., 1.0.0)'
         required: true
+      release_body:
+        description: 'Body for the release'
+        required: false
+        default: ""
+env:
+  RELEASE_NAME=Release-${{ github.event.inputs.tag_name }}
 
 jobs:
   validate_tag:
@@ -33,3 +39,8 @@ jobs:
           
       - name: Release
         uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag_name }}
+          if e:
+          name: ${{ github.env.RELEASE_NAME }}
+          body: ${{ github.event.inputs.release_body }}
