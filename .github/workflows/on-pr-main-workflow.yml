@@ -21,17 +21,26 @@ jobs:
       - name: Display the config
         shell: bash
         run: echo ${{ steps.read_data_from_config.outputs.value }}
-  job_check_config_value:
-    needs: job_read_config
+
+  job_check_py_changes:
     runs-on: ubuntu-latest
+    outputs:
+      is_changed: ${{ steps.check_py_changes.outputs.is_changed }}
     steps:
-      - name: Display config value
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check job changes
+        uses: ./.github/actions/check-py-changes
+        id: check_py_changes
+      - name: Check
+        shell: bash
         run: |
-          echo ${{ needs.job_read_config.outputs.config }}
+          echo steps.check_py_changes.outputs.is_changed
+          echo ${{ steps.check_py_changes.outputs.is_changed }}
 
   job_script_validation:
-    if: contains(github.event.pull_request.changed_files, '.py')
-    needs: job_read_config
+    needs: [job_read_config, job_check_py_changes]
+    if: needs.job_check_py_changes.outputs.is_changed  == 'true'
     runs-on: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['runs-on'] }}
     strategy:
       matrix:
