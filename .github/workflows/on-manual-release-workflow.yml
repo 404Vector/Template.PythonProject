@@ -41,3 +41,4 @@ jobs:
           tag_name: ${{ github.event.inputs.tag_name }}
           name: Release ${{ github.env.RELEASE_NAME }}
           body: ${{ github.event.inputs.release_body }}
+          token: ${{ secrets.GITHUB_TOKEN }}
