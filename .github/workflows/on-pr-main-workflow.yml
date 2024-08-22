@@ -35,7 +35,7 @@ jobs:
 
   job_script_validation:
     needs: [job_read_config, job_check_py_changes]
-    if: ${{ needs.job_check_py_changes.outputs.is_changed }}
+    if: needs.job_check_py_changes.outputs.is_changed  == 'true'
     runs-on: ${{ fromJson(needs.job_read_config.outputs.config)['workflows']['runs-on'] }}
     strategy:
       matrix:
