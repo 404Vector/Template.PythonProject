@@ -32,6 +32,10 @@ jobs:
       - name: Check job changes
         uses: ./.github/actions/check-py-changes
         id: check_py_changes
+      - name: Check
+        shell: bash
+        run: |
+          echo ${{ steps.check_py_changes.outputs.value }}
 
   job_script_validation:
     needs: [job_read_config, job_check_py_changes]

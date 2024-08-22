@@ -24,8 +24,9 @@ runs:
       id: check_files
       run: |
         if git diff --name-only origin/${{ inputs.base_branch }} | grep -q '\.py$'; then
+          echo "value=true"
           echo "value=true" >> $GITHUB_ENV
         else
+          echo "value=false"
           echo "value=false" >> $GITHUB_ENV
         fi
-        echo $GITHUB_ENV
