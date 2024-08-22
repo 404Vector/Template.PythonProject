@@ -9,7 +9,7 @@ inputs:
 outputs:
   is_changed:
     description: "Returns 'true' if .py files are changed, 'false' otherwise."
-    value: ${{ steps.check_files.outputs.value }}
+    value: ${{ steps.check_files.outputs.is_changed }}
 
 runs:
   using: "composite"
@@ -24,7 +24,7 @@ runs:
       id: check_files
       run: |
         if git diff --name-only origin/${{ inputs.base_branch }} | grep -q '\.py$'; then
-          echo "value=true" >> $GITHUB_ENV
+          echo "is_changed=true" >> $GITHUB_OUTPUT
         else
-          echo "value=false" >> $GITHUB_ENV
+          echo "is_changed=false" >> $GITHUB_OUTPUT
         fi
