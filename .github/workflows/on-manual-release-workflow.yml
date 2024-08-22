@@ -39,6 +39,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag_name }}
-          if e:
           name: Release ${{ github.env.RELEASE_NAME }}
           body: ${{ github.event.inputs.release_body }}
